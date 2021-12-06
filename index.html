@@ -12,13 +12,17 @@
     <script>
         const canvas = document.querySelector("canvas");
         const ctx = canvas.getContext("2d");
+
         const skelly = new Image();
         skelly.src = "assets/skelly.png" ;
-
         skelly.addEventListener("load", terminouDeCarregar);
 
+        const imagem = new Image();
+        imagem.src = "assets/imagem.png" ;
+        imagem.addEventListener("load", terminouDeCarregar);
+
         function desenhaFundo(){
-            ctx.fillStyle = "green";
+            ctx.fillStyle = "red";
             ctx.fillRect(0,0, canvas.width, canvas.height);
         }
 
@@ -26,10 +30,37 @@
         let c =1;
         let pose = 0;
         let quadro = 0;
+        
         const POSES = [
-            7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 6, 6, 6, 6, 13, 13, 13, 13, 6
+                {qmax:7,pv:9},
+                {qmax:7,pv:9},
+                {qmax:7,pv:9},
+                {qmax:7,pv:9},
+                {qmax:8,pv:9},
+                {qmax:8,pv:9},
+                {qmax:8,pv:9},
+                {qmax:8,pv:9},
+                {qmax:9,pv:9},
+                {qmax:9,pv:9},
+                {qmax:9,pv:9},
+                {qmax:9,pv:9}, 
+                {qmax:6,pv:9}, 
+                {qmax:6,pv:9}, 
+                {qmax:6,pv:9},
+                {qmax:6,pv:9},
+                {qmax:13,pv:27},
+                {qmax:13,pv:27},
+                {qmax:13,pv:27},
+                {qmax:13,pv:27},
+                {qmax:6,pv:9}
         ];
-
+        const POSES2 = [
+                { qmax:6, pv:9 },
+                { qmax:4, pv:1 },
+                { qmax:4, pv:1 },
+                { qmax:4, pv:1 },
+        ];
+        
         function terminouDeCarregar(){
             
         }
@@ -42,10 +73,13 @@
             dt = (t - t0)/1000;
             desenhaFundo();
 
-             quadro =  (quadro >= POSES[pose] -1)? 0: quadro +  9 * dt;
-               
-            
+            quadro = quadro >= POSES2[pose].qmax - 1
+            ? 0
+            : quadro + POSES2[pose].pv * dt;
 
+            quadro = quadro >= POSES[pose].qmax - 1
+            ? 0
+            : quadro + POSES[pose].pv * dt;
 
             ctx.drawImage(skelly,
             //sx, sy, sw, sh 
@@ -54,6 +88,13 @@
             0, 0, 64, 64
             );
 
+            ctx.drawImage(imagem,
+            //sx, sy, sw, sh
+            Math.floor(quadro)*198, pose*198, 198, 198,
+            //dx, dy, dw, dh 
+            64, 64, 50, 50
+           );
+           
             requestAnimationFrame(passo);
             t0 = t;
         }
