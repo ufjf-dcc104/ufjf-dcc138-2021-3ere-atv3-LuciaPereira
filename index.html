@@ -30,6 +30,8 @@
         let c =1;
         let pose = 0;
         let quadro = 0;
+        let pose2 = 0;
+        let quadro2 = 0;
         
         const POSES = [
                 {qmax:7,pv:9},
@@ -55,10 +57,10 @@
                 {qmax:6,pv:9}
         ];
         const POSES2 = [
-                { qmax:6, pv:9 },
-                { qmax:4, pv:1 },
-                { qmax:4, pv:1 },
-                { qmax:4, pv:1 },
+                { qmax2:5, pv:9 },
+                { qmax2:4, pv:1 },
+                { qmax2:4, pv:1 },
+                { qmax2:4, pv:1 },
         ];
         
         function terminouDeCarregar(){
@@ -73,9 +75,9 @@
             dt = (t - t0)/1000;
             desenhaFundo();
 
-            quadro = quadro >= POSES2[pose].qmax - 1
+            quadro2 = quadro2 >= POSES2[pose2].qmax2 - 1
             ? 0
-            : quadro + POSES2[pose].pv * dt;
+            : quadro2 + POSES2[pose2].pv * dt;
 
             quadro = quadro >= POSES[pose].qmax - 1
             ? 0
@@ -86,11 +88,11 @@
             Math.floor(quadro)*64, pose*64, 64, 64,
             //dx, dy, dw, dh
             0, 0, 64, 64
-            );
+            );           
 
             ctx.drawImage(imagem,
             //sx, sy, sw, sh
-            Math.floor(quadro)*198, pose*198, 198, 198,
+            Math.floor(quadro2)*198, pose2*198, 198, 198,
             //dx, dy, dw, dh 
             64, 64, 50, 50
            );
